@@ -1,5 +1,4 @@
-﻿using Application.Commands;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Common;
@@ -12,17 +11,25 @@ namespace Application.UseCases.CommandHandlers
     {
         private readonly IDoctorRepository repository;
         private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
 
         public CreateDoctorCommandHandler(IDoctorRepository repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
+            this.userRepository = userRepository;
         }
 
         public async Task<Result<Guid>> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
+            var userId = await userRepository.GetUserIdAsync(request.Email);
+            if (userId == Guid.Empty)
+            {
+                return Result<Guid>.Failure("User not found.");
+            }
+
             var doctor = mapper.Map<Doctor>(request);
-            doctor.UserId = new Guid("11111111-1111-1111-1111-111111111111");//very hardcoded for testing
+            doctor.UserId = userId;
             var result = await repository.AddDoctor(doctor);
             if (result.IsSuccess)
             {

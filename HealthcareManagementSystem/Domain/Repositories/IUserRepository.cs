@@ -7,5 +7,7 @@ namespace Domain.Repositories
 		Task<Guid> AddUser(User user);
 		Task<IEnumerable<User>> GetUsers();
 		Task UpdateUser(User user);
-	}
+        Task<Guid> GetUserIdAsync(string email);
+
+    }
 }

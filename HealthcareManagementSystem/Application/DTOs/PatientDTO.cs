@@ -2,7 +2,8 @@
 {
 	public class PatientDto
 	{
-		public required string FirstName { get; set; }
+        public Guid UserId { get; set; }
+        public required string FirstName { get; set; }
 		public required string LastName { get; set; }
 		public required string DateOfBirth { get; set; }
 		public required string Gender { get; set; }
