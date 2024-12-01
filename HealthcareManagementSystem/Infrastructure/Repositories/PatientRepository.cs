@@ -54,5 +54,11 @@ namespace Infrastructure.Repositories
                 return Result.Failure(errorMessage);
             }
         }
+
+        public async Task<IEnumerable<Patient>> GetAllAsync()
+        {
+            return await context.Patients.ToListAsync();
+        }
+
     }
 }

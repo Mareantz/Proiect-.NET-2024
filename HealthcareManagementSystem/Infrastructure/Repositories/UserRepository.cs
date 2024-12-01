@@ -41,5 +41,10 @@ namespace Infrastructure.Repositories
         {
             return await context.Users.ToListAsync();
         }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await context.Users.ToListAsync();
+        }
     }
 }

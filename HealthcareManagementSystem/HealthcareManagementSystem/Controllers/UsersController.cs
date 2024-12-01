@@ -7,6 +7,8 @@ using Application.Queries;
 using Application.DTOs;
 using Domain.Common;
 using Application.UseCases.Commands;
+using Application.UseCases.Queries;
+using Application.Utils;
 
 namespace HealthcareManagementSystem.Controllers
 {
@@ -48,5 +50,18 @@ namespace HealthcareManagementSystem.Controllers
             await mediator.Send(command);
             return StatusCode(StatusCodes.Status204NoContent);
         }
+
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PagedResult<UserDto>>> GetFilteredUsers([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var query = new GetFilteredUsersQuery
+            {
+                Page = page,
+                PageSize = pageSize
+            };
+            var result = await mediator.Send(query);
+            return Ok(result);
+        }
+
     }
 }

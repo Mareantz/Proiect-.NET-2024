@@ -5,6 +5,8 @@ namespace Domain.Repositories
 {
     public interface IUserRepository
     {
+        Task<IEnumerable<User>> GetAllAsync();
+
         Task<Result<Guid>> AddUser(User user);
         Task<IEnumerable<User>> GetUsers();
         Task UpdateUser(User user);

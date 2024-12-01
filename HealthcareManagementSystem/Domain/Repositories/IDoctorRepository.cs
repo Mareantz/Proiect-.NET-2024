@@ -5,6 +5,8 @@ namespace Domain.Repositories
 {
     public interface IDoctorRepository
     {
+        Task<IEnumerable<Doctor>> GetAllAsync();
+
         Task<Result<Guid>> AddDoctor(Doctor doctor);
         Task<IEnumerable<Doctor>> GetDoctors();
         Task<Result> UpdateDoctor(Doctor doctor);

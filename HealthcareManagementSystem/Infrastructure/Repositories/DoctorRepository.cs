@@ -55,5 +55,11 @@ namespace Infrastructure.Repositories
         {
             return await context.Doctors.FindAsync(id);
 		}
+
+        public async Task<IEnumerable<Doctor>> GetAllAsync()
+        {
+            return await context.Doctors.ToListAsync();
+        }
+
     }
 }
