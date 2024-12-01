@@ -39,10 +39,16 @@ namespace Application.CommandHandlers
             return Result<Guid>.Failure(result.ErrorMessage);
 		}
 
-		private static DateOnly ParseDateOfBirth(string dateOfBirth)
-		{
-			return DateOnly.ParseExact(dateOfBirth, "dd-MM-yyyy");
+        private static DateOnly ParseDateOfBirth(string? dateOfBirth)
+        {
+            if (string.IsNullOrEmpty(dateOfBirth))
+            {
+                throw new ArgumentException("Date of birth is required.");
+            }
+			return DateOnly.ParseExact(dateOfBirth, "dd-MM-yyyy", new System.Globalization.CultureInfo("ro-RO"));
+
 		}
+
 
 	}
 }

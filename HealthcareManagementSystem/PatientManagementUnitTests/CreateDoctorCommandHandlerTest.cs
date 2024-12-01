@@ -33,19 +33,16 @@ namespace PatientManagementUnitTests
             {
                 FirstName = "John",
                 LastName = "Doe",
-                Gender = "Male",
-                Email = "ex@gmail.com",
-                PhoneNumber = "1234567890",
-                Address = "123 Main Street"
+                Specialization = "ORL",
+                Bio = "3 years of experience"
             };
             var doctor = new Doctor
             {
                 FirstName = command.FirstName,
                 LastName = command.LastName,
-                Gender = command.Gender,
-                Email = command.Email,
-                PhoneNumber = command.PhoneNumber,
-                Address = command.Address,
+                Specialization = command.Specialization,
+                Bio = command.Bio,
+                UserId = new Guid("33333333-3333-3333-3333-333333333333") 
             };
 
             mapper.Map<Doctor>(command).Returns(doctor);
@@ -60,6 +57,7 @@ namespace PatientManagementUnitTests
             response.Data.Should().Be(doctor.UserId);
         }
 
+
         [Fact]
         public async Task Given_InvalidCreateDoctorCommand_WhenHandleIsCalled_Then_DoctorShouldNotBeCreated()
         {
@@ -68,21 +66,17 @@ namespace PatientManagementUnitTests
             {
                 FirstName = "John",
                 LastName = "Doe",
-                Gender = "Male",
-                Email = "ex@gmail.com",
-                PhoneNumber = "1234567890",
-                Address = "123 Main Street"
-            };
+                Specialization = "ORL",
+                Bio = "3 years of experience"
+			};
 
             var doctor = new Doctor
             {
                 FirstName = command.FirstName,
                 LastName = command.LastName,
-                Gender = command.Gender,
-                Email = command.Email,
-                PhoneNumber = command.PhoneNumber,
-                Address = command.Address,
-            };
+				Specialization = command.Specialization,
+				Bio = command.Bio,
+			};
 
             mapper.Map<Doctor>(command).Returns(doctor);
             repository.AddDoctor(doctor).Returns(Result<Guid>.Failure("Error"));

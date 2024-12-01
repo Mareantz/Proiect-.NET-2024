@@ -3,6 +3,18 @@ using Application.Utils;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowFrontend",
+		policy => policy.WithOrigins("https://healthcaremanagement-fe.vercel.app/")
+						.AllowAnyHeader()
+						.AllowAnyMethod());
+});
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -11,6 +23,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
+
+app.UseHealthChecks("/health");
 
 if (app.Environment.IsDevelopment())
 {
@@ -18,6 +33,9 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+	app.UseHttpsRedirection();
+}
 app.MapControllers();
-app.Run();
+await app.RunAsync();

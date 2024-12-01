@@ -16,7 +16,6 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<Guid> GetUserIdAsync(string email)
         {
             var user = await context.Users
                 .Where(u => u.Email == email)
@@ -38,7 +37,7 @@ namespace Infrastructure.Repositories
                 var errorMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
                 return Guid.Empty;
             }
-        }
+            }
 
         public async Task<IEnumerable<User>> GetUsers()
         {
@@ -49,6 +48,11 @@ namespace Infrastructure.Repositories
         {
             context.Entry(user).State = EntityState.Modified;
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await context.Users.ToListAsync();
         }
     }
 }
