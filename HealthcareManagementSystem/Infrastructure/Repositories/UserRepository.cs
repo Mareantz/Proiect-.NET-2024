@@ -1,8 +1,9 @@
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using PredictiveHealthcare.Infrastructure.Persistence;
+
 
 namespace Infrastructure.Repositories
 {
@@ -15,20 +16,32 @@ namespace Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<Result<Guid>> AddUser(User user)
+        {
+            var user = await context.Users
+                .Where(u => u.Email == email)
+                .FirstOrDefaultAsync();
+
+            return user?.Id ?? Guid.Empty;
+        }
+
+        public async Task<Guid> AddUser(User user)
         {
             try
             {
                 await context.Users.AddAsync(user);
                 await context.SaveChangesAsync();
-                return Result<Guid>.Success(user.Id);
+                return user.Id;
             }
             catch (Exception ex)
             {
                 var errorMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
-                return Result<Guid>.Failure(errorMessage);
+                return Guid.Empty;
+            }
             }
 
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await context.Users.ToListAsync();
         }
 
         public async Task UpdateUser(User user)
