@@ -11,7 +11,7 @@ body {
 }
 
 /* General container styles */
-.user-register {
+.patient-risk-prediction {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -23,7 +23,7 @@ body {
 }
 
 /* Title */
-.user-register h1 {
+.patient-risk-prediction h1 {
     text-align: center;
     color: #2d3436;
     margin-bottom: 25px;
@@ -137,12 +137,12 @@ button {
 
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
-    .user-register {
+    .patient-risk-prediction {
         padding: 20px;
         width: 90%; /* Reduce width for smaller screens */
     }
 
-    .user-register h1 {
+    .patient-risk-prediction h1 {
         font-size: 24px; /* Smaller title */
     }
 
@@ -166,12 +166,12 @@ button {
 }
 
 @media (max-width: 480px) {
-    .user-register {
+    .patient-risk-prediction {
         padding: 15px;
         width: 95%; /* Further reduce width for very small screens */
     }
 
-    .user-register h1 {
+    .patient-risk-prediction h1 {
         font-size: 20px; /* Smaller title for mobile */
     }
 
