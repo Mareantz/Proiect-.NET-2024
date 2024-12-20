@@ -1,0 +1,16 @@
+<div class="services" id="services">
+  <h2>Our Services</h2>
+</div>
+
+<section 
+  *ngFor="let service of services; let i = index" 
+  [ngClass]="{ 'left_to_right_service': i % 2 === 0, 'right_to_left_service': i % 2 !== 0 }"
+>
+  <div class="text">
+    <h2>{{ service.title }}</h2>
+    <p>{{ service.description }}</p>
+  </div>
+  <div class="image">
+    <img [src]="service.image" [attr.alt]="service.alt || 'Service image'" alt="Service image" />
+  </div>
+</section>
